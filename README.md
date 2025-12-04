@@ -1,14 +1,41 @@
 # Java-21-Petclinic
 
-This project now includes the Maven Wrapper so you can build and run it without having Maven installed globally.
+A Java 21 Spring Boot 3.2.x Petclinic-style demo with Actuator health checks and Swagger UI (springdoc-openapi).
 
-How to run (development):
+Requirements:
+- Java 21 (ensure JAVA_HOME points to a Java 21 installation or that `java -version` reports 21)
+- The Maven Wrapper is included; you do not need Maven installed globally.
+
+Build:
 - Unix/macOS:
-  ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-Dserver.port=3002 -Dserver.address=0.0.0.0"
-- Windows (PowerShell or CMD):
-  .\mvnw.cmd spring-boot:run -Dspring-boot.run.jvmArguments="-Dserver.port=3002 -Dserver.address=0.0.0.0"
+  ./mvnw -v
+  ./mvnw clean package
+- Windows:
+  .\mvnw.cmd -v
+  .\mvnw.cmd clean package
+
+Run (development):
+- Default port (8080):
+  - Unix/macOS:
+    ./mvnw spring-boot:run
+  - Windows:
+    .\mvnw.cmd spring-boot:run
+- Custom port 3002:
+  - Unix/macOS:
+    ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-Dserver.port=3002 -Dserver.address=0.0.0.0"
+  - Windows:
+    .\mvnw.cmd spring-boot:run -Dspring-boot.run.jvmArguments="-Dserver.port=3002 -Dserver.address=0.0.0.0"
+
+Endpoints:
+- Swagger UI: http://localhost:8080/swagger-ui/index.html (or /swagger-ui/index.html on your chosen port)
+- OpenAPI JSON: http://localhost:8080/v3/api-docs
+- Health (Actuator): http://localhost:8080/actuator/health
+- Healthz (simple controller): http://localhost:8080/healthz
+- Sample API:
+  - GET /api/owners
+  - GET /api/owners/{id}
 
 Notes:
-- The wrapper will download Maven (3.9.6) on first run into your local cache.
-- Requires Java 21 (ensure JAVA_HOME points to a Java 21 installation or that 'java' in PATH is Java 21).
-- No application code was changed; only build/run tooling was added.
+- Actuator exposes health and info: see src/main/resources/application.properties.
+- Health probes (liveness/readiness) are enabled via management.endpoint.health.probes.enabled=true.
+- This project is configured for Java 21 using maven-compiler-plugin and Spring Boot 3.2.x.
