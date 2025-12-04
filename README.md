@@ -6,28 +6,30 @@ Requirements:
 - Java 21 (ensure JAVA_HOME points to a Java 21 installation or that `java -version` reports 21)
 - The Maven Wrapper is included; you do not need Maven installed globally.
 
-Build:
+Build (recommended):
 - Unix/macOS:
   ./mvnw -v
-  ./mvnw clean package
+  ./mvnw -DskipTests clean package
 - Windows:
   .\mvnw.cmd -v
-  .\mvnw.cmd clean package
+  .\mvnw.cmd -DskipTests clean package
 
 Troubleshooting Maven Wrapper:
-- If you see: "Error: Could not find or load main class #", it was caused by comment lines in `.mvn/jvm.config` being passed as arguments to `java`.
-  The `mvnw` script in this project has been fixed to ignore comment and blank lines in `.mvn/jvm.config`.
+- If you see: "Error: Could not find or load main class #", it is caused by lines in `.mvn/jvm.config` being passed as JVM arguments by the Windows wrapper.
+  To prevent this, `.mvn/jvm.config` in this project contains no commented lines—only valid JVM flags are allowed if you decide to add any.
 - Ensure the `mvnw` script:
   - starts with a Unix shebang `#!/bin/sh`
   - uses LF line endings
   - is executable: `chmod +x mvnw`
+- Maven version:
+  - The Maven Wrapper is configured via `.mvn/wrapper/maven-wrapper.properties` to use Maven 3.9.x (or newer).
 - If downloads are blocked by your network, try again when connectivity is available.
 
 Java 21 selection and Maven configuration:
-- This project compiles with Java 21 via maven-compiler-plugin using `<release>21</release>`.
-- The Maven Wrapper is configured to use Maven 3.9.x (see `.mvn/wrapper/maven-wrapper.properties`).
-- If you encounter "release version 21 not supported", your runtime JDK is older than 21.
-  Fix by selecting a Java 21 JDK:
+- This project compiles with Java 21 via maven-compiler-plugin `<release>21</release>`.
+- Spring Boot 3.2.x is used and compatible with Java 21.
+- The Maven Wrapper uses Maven 3.9.x (see `.mvn/wrapper/maven-wrapper.properties`).
+- If you encounter "release version 21 not supported", your runtime JDK is older than 21. Fix by selecting a Java 21 JDK:
   - Unix/macOS:
     - If using SDKMAN: `sdk use java 21.x.y-z`
     - Or set JAVA_HOME to a JDK 21 path, for example:
@@ -37,7 +39,13 @@ Java 21 selection and Maven configuration:
   - Windows (PowerShell):
     - Set JAVA_HOME to a JDK 21 dir and ensure `%JAVA_HOME%\bin` is first in PATH.
     - Verify: `java -version` shows 21.
-- Optional: `.mvn/jvm.config` contains commented `--add-opens` lines you can enable if any reflection/module access issues arise (not typically needed for Spring Boot 3.2+).
+- Toolchains (optional but supported):
+  - If your environment uses Maven Toolchains, this project includes `.mvn/toolchains.xml` requesting a JDK with `<vendor>any</vendor>` and `<version>[21,)</version>`.
+  - If you have a corporate/global toolchains setup pinning an older JDK, ensure it provides a 21+ JDK or override with this project toolchain.
+
+JVM flags file:
+- `.mvn/jvm.config` is intentionally kept free of commented lines to avoid wrapper parsing issues on Windows.
+- If you add JVM options, add only valid flags—do not add commented (`#`) lines.
 
 Alternative run script (fallback):
 - Unix/macOS:
