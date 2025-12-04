@@ -1,0 +1,6 @@
+com/example/petclinic/config/CorsConfig$1.class
+com/example/petclinic/controller/OwnerController.class
+com/example/petclinic/config/CorsConfig.class
+com/example/petclinic/config/OpenApiConfig.class
+com/example/petclinic/PetclinicApplication.class
+com/example/petclinic/controller/HealthController.class

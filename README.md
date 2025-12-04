@@ -70,13 +70,31 @@ Run (development):
     .\mvnw.cmd spring-boot:run -Dspring-boot.run.jvmArguments="-Dserver.port=3002 -Dserver.address=0.0.0.0"
 
 Endpoints:
-- Swagger UI: http://localhost:8080/swagger-ui/index.html (or /swagger-ui/index.html on your chosen port)
-- OpenAPI JSON: http://localhost:8080/v3/api-docs
+- Swagger UI (local): http://localhost:8080/swagger-ui.html
+- Swagger UI (deployment): https://vscode-internal-29701-beta.beta01.cloud.kavia.ai:3002/swagger-ui.html
+- OpenAPI JSON (local): http://localhost:8080/v3/api-docs
+- OpenAPI JSON (deployment): https://vscode-internal-29701-beta.beta01.cloud.kavia.ai:3002/v3/api-docs
 - Health (Actuator): http://localhost:8080/actuator/health
 - Healthz (simple controller): http://localhost:8080/healthz
 - Sample API:
   - GET /api/owners
   - GET /api/owners/{id}
+
+OpenAPI server URL:
+- The OpenAPI/Swagger "servers" URL is set to:
+  https://vscode-internal-29701-beta.beta01.cloud.kavia.ai:3002
+  This ensures Swagger UI "Try it out" calls use https and port 3002, avoiding mixed-content or wrong-host issues.
+- You can override it with:
+  - JVM property: `-Dpetclinic.openapi.server-url=https://<host>:<port>`
+  - Environment variable: `PETCLINIC_OPENAPI_SERVER_URL=https://<host>:<port>`
+- If an http URL is provided, the app will force https for the server URL to avoid mixed-content errors.
+
+CORS:
+- CORS is configured to allow the deployment origin(s):
+  - https://vscode-internal-29701-beta.beta01.cloud.kavia.ai
+  - https://vscode-internal-29701-beta.beta01.cloud.kavia.ai:3002
+  with methods GET, POST, PUT, DELETE, OPTIONS and headers Content-Type, Authorization.
+- This allows Swagger UI "Try it out" to succeed without CORS errors when accessed from the deployment URL.
 
 Notes:
 - Actuator exposes health and info: see src/main/resources/application.properties.
