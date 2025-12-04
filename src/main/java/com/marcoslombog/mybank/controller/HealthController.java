@@ -1,4 +1,4 @@
-package com.example.petclinic.controller;
+package com.marcoslombog.mybank.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,7 +26,7 @@ public class HealthController {
         Map<String, Object> body = new HashMap<>();
         body.put("status", "OK");
         body.put("timestamp", OffsetDateTime.now().toString());
-        body.put("service", "petclinic");
+        body.put("service", "mybank");
         return ResponseEntity.ok(body);
     }
 }
