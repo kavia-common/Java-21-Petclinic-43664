@@ -23,6 +23,22 @@ Troubleshooting Maven Wrapper:
   - is executable: `chmod +x mvnw`
 - If downloads are blocked by your network, try again when connectivity is available.
 
+Java 21 selection and Maven configuration:
+- This project compiles with Java 21 via maven-compiler-plugin using `<release>21</release>`.
+- The Maven Wrapper is configured to use Maven 3.9.x (see `.mvn/wrapper/maven-wrapper.properties`).
+- If you encounter "release version 21 not supported", your runtime JDK is older than 21.
+  Fix by selecting a Java 21 JDK:
+  - Unix/macOS:
+    - If using SDKMAN: `sdk use java 21.x.y-z`
+    - Or set JAVA_HOME to a JDK 21 path, for example:
+      export JAVA_HOME=/path/to/jdk-21
+      export PATH="$JAVA_HOME/bin:$PATH"
+    - Verify: `java -version` shows 21 (and `./mvnw -v` reports Java home pointing to JDK 21).
+  - Windows (PowerShell):
+    - Set JAVA_HOME to a JDK 21 dir and ensure `%JAVA_HOME%\bin` is first in PATH.
+    - Verify: `java -version` shows 21.
+- Optional: `.mvn/jvm.config` contains commented `--add-opens` lines you can enable if any reflection/module access issues arise (not typically needed for Spring Boot 3.2+).
+
 Alternative run script (fallback):
 - Unix/macOS:
   ./run.sh                      # builds (if possible) and runs the jar with java -jar
