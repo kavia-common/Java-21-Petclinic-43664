@@ -14,6 +14,25 @@ Build:
   .\mvnw.cmd -v
   .\mvnw.cmd clean package
 
+Troubleshooting Maven Wrapper:
+- If you see: "Error: Could not find or load main class #", it was caused by comment lines in `.mvn/jvm.config` being passed as arguments to `java`.
+  The `mvnw` script in this project has been fixed to ignore comment and blank lines in `.mvn/jvm.config`.
+- Ensure the `mvnw` script:
+  - starts with a Unix shebang `#!/bin/sh`
+  - uses LF line endings
+  - is executable: `chmod +x mvnw`
+- If downloads are blocked by your network, try again when connectivity is available.
+
+Alternative run script (fallback):
+- Unix/macOS:
+  ./run.sh                      # builds (if possible) and runs the jar with java -jar
+  ./run.sh -Dserver.port=3002 -Dserver.address=0.0.0.0
+  Notes:
+  - The script tries `./mvnw`, then system `mvn`. If neither works but a jar exists in `target/`, it will run it.
+  - Requires Java 21 available on PATH.
+- Windows:
+  Use the Maven Wrapper (`.\mvnw.cmd spring-boot:run`) or package and run the jar: `java -jar target\<artifact>.jar`.
+
 Run (development):
 - Default port (8080):
   - Unix/macOS:

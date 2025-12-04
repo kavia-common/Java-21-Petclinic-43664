@@ -132,7 +132,10 @@ if [ ! -e "$WRAPPER_JAR" ]; then
 fi
 
 # Provide JVM options via environment or .mvn/jvm.config
-MAVEN_OPTS="${MAVEN_OPTS:-$( [ -f "$MAVEN_PROJECTBASEDIR/.mvn/jvm.config" ] && tr '\n' ' ' < "$MAVEN_PROJECTBASEDIR/.mvn/jvm.config" )}"
+# Provide JVM options via environment or .mvn/jvm.config (ignore comments and blank lines)
+if [ -z "${MAVEN_OPTS}" ] && [ -f "$MAVEN_PROJECTBASEDIR/.mvn/jvm.config" ]; then
+  MAVEN_OPTS="$(grep -v -E '^[[:space:]]*#' "$MAVEN_PROJECTBASEDIR/.mvn/jvm.config" | sed '/^[[:space:]]*$/d' | tr '\n' ' ')"
+fi
 
 # Execute Maven WrapperMain
 exec "$JAVACMD" \
