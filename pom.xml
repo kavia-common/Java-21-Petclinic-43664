@@ -85,7 +85,32 @@
   </dependencies>
 
   <build>
+    <!-- Explicitly set output directory to the default target/classes and ensure it's created -->
+    <outputDirectory>${project.basedir}/target/classes</outputDirectory>
     <plugins>
+      <!-- Pre-build step: ensure target/classes exists and is writable before resources are copied -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <id>prepare-output-directory</id>
+            <phase>generate-resources</phase>
+            <configuration>
+              <target>
+                <mkdir dir="${project.build.outputDirectory}"/>
+                <!-- Attempt to make directory writable in restrictive environments -->
+                <chmod dir="${project.build.outputDirectory}" perm="u+rwx,g+rx,o+rx" type="both" failonerror="false"/>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
       <!-- Spring Boot plugin -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
@@ -108,6 +133,17 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
+      </plugin>
+
+      <!-- Make resource plugin explicit (default lifecycle still applies) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <configuration>
+          <overwrite>true</overwrite>
+          <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+        </configuration>
       </plugin>
     </plugins>
   </build>
