@@ -22,7 +22,7 @@
     <java.version>17</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <!-- compile.release controls the --release flag for the compiler; override with -Dcompile.release=21 on JDK21 -->
+    <!-- compile.release controls the release flag for the compiler; override with -Dcompile.release=21 on JDK21 -->
     <compile.release>17</compile.release>
 
     <spring-boot.version>3.2.7</spring-boot.version>
