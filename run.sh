@@ -1,6 +1,7 @@
 #!/bin/sh
 # Simple fallback script to build (using Maven or Maven Wrapper) and run the Spring Boot app via java -jar.
 # Usage examples:
+#   ./mvnw -q -DskipTests spring-boot:run -Dspring-boot.run.arguments="--server.port=3002,--server.address=0.0.0.0"
 #   ./run.sh                # build (if needed) and run on default port 8080
 #   ./run.sh -Dserver.port=3002 -Dserver.address=0.0.0.0
 # Any extra arguments are passed to 'java -jar' as JVM system properties.
@@ -10,7 +11,6 @@ set -eu
 PROJECT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
 cd "$PROJECT_DIR"
 
-JAR_GLOB="target/*-SNAPSHOT.jar"
 FINAL_JAR=""
 
 log() {
@@ -45,14 +45,18 @@ build_with_maven() {
 }
 
 find_jar() {
-  # Prefer non-SNAPSHOT final jar if present, else any jar in target
+  # Prefer the Boot repackage jar (artifact-version.jar) if present
   if [ -d target ]; then
-    # Try to pick the Boot repackage jar (normally artifact-version.jar)
     FINAL_JAR="$(ls -1 target/*.jar 2>/dev/null | head -n 1 || true)"
   else
     FINAL_JAR=""
   fi
 }
+
+# Ensure wrapper is executable (prevents exit code 127 on some systems)
+if [ -f "./mvnw" ] && [ ! -x "./mvnw" ]; then
+  chmod +x ./mvnw || true
+fi
 
 ensure_java
 

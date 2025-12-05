@@ -4,7 +4,7 @@ my-bank REST API migrated to Java 21 and Spring Boot 3.x and integrated into thi
 
 Requirements:
 - Java 21 (ensure JAVA_HOME points to a Java 21 installation or that `java -version` reports 21)
-- The Maven Wrapper is included; you do not need Maven installed globally.
+- Use the Maven Wrapper; you do NOT need Maven installed globally.
 
 Build (recommended):
 - Unix/macOS:
@@ -14,16 +14,32 @@ Build (recommended):
   .\mvnw.cmd -v
   .\mvnw.cmd -DskipTests clean package
 
-Troubleshooting Maven Wrapper:
-- If you see: "Error: Could not find or load main class #", it is caused by lines in `.mvn/jvm.config` being passed as JVM arguments by the Windows wrapper.
-  To prevent this, `.mvn/jvm.config` in this project contains no commented lines—only valid JVM flags are allowed if you decide to add any.
+Run (preferred via Maven Wrapper):
+- Default port (8080):
+  - Unix/macOS:
+    ./mvnw spring-boot:run
+  - Windows:
+    .\mvnw.cmd spring-boot:run
+
+- Custom port 3002 bound to 0.0.0.0 (recommended for container/preview):
+  - Unix/macOS:
+    ./mvnw -q -DskipTests spring-boot:run -Dspring-boot.run.arguments="--server.port=3002,--server.address=0.0.0.0"
+  - Windows:
+    .\mvnw.cmd -q -DskipTests spring-boot:run -Dspring-boot.run.arguments="--server.port=3002,--server.address=0.0.0.0"
+
+Notes about port 3002:
+- If port 3002 is already in use, the application may fail to bind. This is a port conflict, not a wrapper issue.
+- To verify the wrapper is working (no exit code 127), run: `./mvnw -v`. If that succeeds, the wrapper is functional.
+- You can choose a different port, e.g.: `-Dspring-boot.run.arguments="--server.port=3100,--server.address=0.0.0.0"`
+
+Troubleshooting Maven Wrapper (prevents exit code 127):
 - Ensure the `mvnw` script:
   - starts with a Unix shebang `#!/bin/sh`
   - uses LF line endings
   - is executable: `chmod +x mvnw`
-- Maven version:
-  - The Maven Wrapper is configured to use Maven 3.9.x (or newer).
+- The Maven Wrapper auto-downloads the correct Maven version based on `.mvn/wrapper/maven-wrapper.properties`.
 - If downloads are blocked by your network, try again when connectivity is available.
+- Verify wrapper works: `./mvnw -v` (no need for system `mvn`).
 
 Java 21 selection and Maven configuration:
 - This project compiles with Java 21 via maven-compiler-plugin `<release>21</release>`.
@@ -38,18 +54,6 @@ Java 21 selection and Maven configuration:
   - Windows (PowerShell):
     - Set JAVA_HOME to a JDK 21 dir and ensure `%JAVA_HOME%\bin` is first in PATH.
     - Verify: `java -version` shows 21.
-
-Run (development):
-- Default port (8080):
-  - Unix/macOS:
-    ./mvnw spring-boot:run
-  - Windows:
-    .\mvnw.cmd spring-boot:run
-- Custom port 3002:
-  - Unix/macOS:
-    ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-Dserver.port=3002 -Dserver.address=0.0.0.0"
-  - Windows:
-    .\mvnw.cmd spring-boot:run -Dspring-boot.run.jvmArguments="-Dserver.port=3002 -Dserver.address=0.0.0.0"
 
 Endpoints:
 - Accounts:
