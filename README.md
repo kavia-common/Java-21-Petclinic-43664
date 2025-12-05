@@ -7,6 +7,11 @@
 - If port 3002 is busy, choose a different one:
   ./mvnw -q -DskipTests spring-boot:run -Dspring-boot.run.arguments="--server.port=0,--server.address=0.0.0.0"
 
+Build notes (Java 17/21):
+- The build defaults to Java 17 in pom.xml so it can run where only JDK 17 is available.
+- To build targeting Java 21 when JDK 21 is present, run:
+  ./mvnw -DskipTests -Dcompile.release=21 -Djava.version=21 -Dmaven.compiler.source=21 -Dmaven.compiler.target=21 clean package
+
 Notes:
 - This project includes .mvn/wrapper with the wrapper jar. If auto-download fails, ensure network access or vendor the jar under .mvn/wrapper/maven-wrapper.jar.
 - The app binds to 0.0.0.0 for container preview compatibility.
