@@ -16,6 +16,12 @@ Build notes (Java 17/21):
 - To build targeting Java 21 when JDK 21 is present, run:
   ./mvnw -DskipTests -Dcompile.release=21 -Djava.version=21 -Dmaven.compiler.source=21 -Dmaven.compiler.target=21 clean package
 
+Runtime and preview:
+- The preview expects the app to listen on port 3002. If you see "Port 3002 was already in use", either stop the conflicting process, or start with a random free port:
+  ./mvnw -q -DskipTests spring-boot:run -Dspring-boot.run.jvmArguments="-Dserver.port=0 -Dserver.address=0.0.0.0"
+  Then check the logs for "Tomcat started on port <NNNNN>" and open that port.
+- Root endpoint "/" is provided and returns a JSON message pointing to useful endpoints.
+
 Notes:
 - This project includes .mvn/wrapper with the wrapper jar. If auto-download fails, ensure network access or vendor the jar under .mvn/wrapper/maven-wrapper.jar.
 - The app binds to 0.0.0.0 for container preview compatibility.
