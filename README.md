@@ -21,16 +21,33 @@ Runtime and preview:
   ./mvnw -q -DskipTests spring-boot:run -Dspring-boot.run.jvmArguments="-Dserver.port=0 -Dserver.address=0.0.0.0"
   Then check the logs for "Tomcat started on port <NNNNN>" and open that port.
 - Root endpoint "/" is provided and returns a JSON message pointing to useful endpoints.
-- API docs:
+
+API docs and Swagger/OpenAPI (important):
+- Swagger UI and OpenAPI JSON are available at:
   - Swagger UI: http://localhost:3002/swagger-ui/index.html
   - OpenAPI JSON: http://localhost:3002/v3/api-docs
   - Preview base: https://vscode-internal-18737-beta.beta01.cloud.kavia.ai:3002/
     - Swagger UI: https://vscode-internal-18737-beta.beta01.cloud.kavia.ai:3002/swagger-ui/index.html
     - OpenAPI JSON: https://vscode-internal-18737-beta.beta01.cloud.kavia.ai:3002/v3/api-docs
 
+Swagger UI host resolution:
+- The application is configured so that Swagger UI uses a relative config-url (/v3/api-docs/swagger-config). This avoids hardcoding localhost
+  and makes the UI work behind reverse proxies and in preview environments.
+- The OpenAPI "servers" entry is set dynamically per request:
+  - If APP_PUBLIC_BASE_URL is defined (e.g., https://host:port[/basePath]), it will be used as the single server URL.
+  - Otherwise, the app attempts to derive the public URL from standard X-Forwarded-* headers (proto/host/port/prefix).
+  - As a final fallback, it uses the request's own scheme/host/port.
+- This ensures "Try it out" in Swagger UI targets the deployed host (e.g., the preview host on port 3002) instead of localhost.
+
+Configuration:
+- To explicitly control the advertised server URL, set:
+  APP_PUBLIC_BASE_URL=https://your-hostname:3002
+  You may also pass it as a system property: -DAPP_PUBLIC_BASE_URL=https://your-hostname:3002
+- Relevant properties in src/main/resources/application.properties:
+  springdoc.swagger-ui.config-url=/v3/api-docs/swagger-config
+  springdoc.swagger-ui.path=/swagger-ui.html
+
 Notes:
 - This project includes .mvn/wrapper with the wrapper jar. If auto-download fails, ensure network access or vendor the jar under .mvn/wrapper/maven-wrapper.jar.
 - The app binds to 0.0.0.0 for container preview compatibility.
 - If a port is in use, prefer server.port=0 which chooses a free port automatically. Check logs for the selected port (e.g., "Tomcat started on port NNNNN").
-
-Note: Minor README capitalization update.
