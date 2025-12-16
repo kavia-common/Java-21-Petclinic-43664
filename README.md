@@ -24,6 +24,9 @@ Runtime and preview:
 - API docs:
   - Swagger UI: http://localhost:3002/swagger-ui/index.html
   - OpenAPI JSON: http://localhost:3002/v3/api-docs
+  - Preview base: https://vscode-internal-18737-beta.beta01.cloud.kavia.ai:3002/
+    - Swagger UI: https://vscode-internal-18737-beta.beta01.cloud.kavia.ai:3002/swagger-ui/index.html
+    - OpenAPI JSON: https://vscode-internal-18737-beta.beta01.cloud.kavia.ai:3002/v3/api-docs
 
 Notes:
 - This project includes .mvn/wrapper with the wrapper jar. If auto-download fails, ensure network access or vendor the jar under .mvn/wrapper/maven-wrapper.jar.
