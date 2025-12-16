@@ -158,3 +158,29 @@
 2025-12-05 08:04:48,587 - Knowledge - INFO - ⚡ Total Redis path: 0.90s (vs ~300s from disk)
 2025-12-05 08:04:48,783 - Knowledge - INFO - Saving knowledge to Redis...
 2025-12-05 08:04:48,986 - Knowledge - INFO - Knowledge saved to Redis successfully
+2025-12-16 10:08:27,885 - Knowledge - INFO - Created shared MongoDB connection pool
+2025-12-16 10:08:28,232 - Knowledge - INFO - Starting Knowledge Graph processing with 20 threads
+2025-12-16 10:08:28,401 - Knowledge - INFO - Initial configuration: chunk_size=65536, max_cache_size=500
+2025-12-16 10:08:28,570 - Knowledge - INFO - Knowledge Graph concurrency configuration: workers=20, max_batch_size=25, max_concurrent_llm_calls=50
+2025-12-16 10:08:29,674 - Knowledge - INFO - 🔍 _load_persisted_knowledge called - checking for Redis optimization
+2025-12-16 10:08:29,843 - Knowledge - WARNING - ❌ load_from_redis method not found - Redis support not attached
+2025-12-16 10:08:30,022 - Knowledge - INFO - load persisted knowledge: begin
+2025-12-16 10:08:30,204 - Knowledge - INFO - Found code-base-name: https://github.com/kavia-common/Java-21-Petclinic-43664.git:kavia-main
+2025-12-16 10:08:30,412 - Knowledge - INFO - Found code_base: <app.utils.kg_build.knowledge.KnowledgeCodeBase object at 0x7f823662dbd0>
+2025-12-16 10:08:30,610 - Knowledge - INFO - process ingested knowledge for /app/data/kaviademo4200/43664/b71020e/Java-21-Petclinic-43664/README.md
+2025-12-16 10:08:30,765 - Knowledge - INFO - Loaded 1 files from persisted knowledge
+2025-12-16 10:08:30,928 - Knowledge - INFO - load persisted knowledge: end
+2025-12-16 10:08:31,100 - Knowledge - INFO - Redis support added with prefix knowledge:b71020e:
+2025-12-16 10:08:31,296 - Knowledge - INFO - Starting knowledge initialization for ID: BJuetJ-b71020e
+2025-12-16 10:08:31,469 - Knowledge - INFO - 🔍 Checking Redis for build_id: b71020e
+2025-12-16 10:08:31,661 - Knowledge - INFO - 🔍 Full session ID: BJuetJ-b71020e
+2025-12-16 10:08:31,825 - Knowledge - INFO - 🔍 Redis prefix will be: knowledge:b71020e:
+2025-12-16 10:08:32,022 - Knowledge - INFO - 🔍 Using attached load_from_redis() method
+2025-12-16 10:08:32,233 - Knowledge - INFO - 🔍 Attempting to load knowledge from Redis...
+2025-12-16 10:08:32,414 - Knowledge - INFO - 🔍 Using derived instance_id for Redis lookup: b71020e
+2025-12-16 10:08:32,575 - Knowledge - INFO - ✅ Redis cache found! Loading knowledge...
+2025-12-16 10:08:32,743 - Knowledge - INFO - ✅ Successfully loaded from Redis: 1 files
+2025-12-16 10:08:32,960 - Knowledge - INFO - ✅ Redis load complete: 1 files in 0.94s
+2025-12-16 10:08:33,160 - Knowledge - INFO - ⚡ Total Redis path: 0.94s (vs ~300s from disk)
+2025-12-16 10:08:33,354 - Knowledge - INFO - Saving knowledge to Redis...
+2025-12-16 10:08:33,537 - Knowledge - INFO - Knowledge saved to Redis successfully
