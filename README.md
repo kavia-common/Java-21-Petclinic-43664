@@ -21,6 +21,9 @@ Runtime and preview:
   ./mvnw -q -DskipTests spring-boot:run -Dspring-boot.run.jvmArguments="-Dserver.port=0 -Dserver.address=0.0.0.0"
   Then check the logs for "Tomcat started on port <NNNNN>" and open that port.
 - Root endpoint "/" is provided and returns a JSON message pointing to useful endpoints.
+- API docs:
+  - Swagger UI: http://localhost:3002/swagger-ui/index.html
+  - OpenAPI JSON: http://localhost:3002/v3/api-docs
 
 Notes:
 - This project includes .mvn/wrapper with the wrapper jar. If auto-download fails, ensure network access or vendor the jar under .mvn/wrapper/maven-wrapper.jar.
