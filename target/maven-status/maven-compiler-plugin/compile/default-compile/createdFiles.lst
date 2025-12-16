@@ -1,10 +1,11 @@
-com/marcoslombog/mybank/config/OpenApiConfig.class
 com/marcoslombog/mybank/controller/HealthController.class
-com/marcoslombog/mybank/model/Account.class
 com/marcoslombog/mybank/controller/AccountController.class
 com/marcoslombog/mybank/exception/ResourceNotFoundException.class
+com/marcoslombog/mybank/config/ServerResolver.class
 com/marcoslombog/mybank/repository/AccountRepository.class
+com/marcoslombog/mybank/model/Account.class
 com/marcoslombog/mybank/controller/RootController.class
 com/marcoslombog/mybank/config/CorsConfig$1.class
+com/marcoslombog/mybank/config/OpenApiDynamicConfig.class
 com/marcoslombog/mybank/App.class
 com/marcoslombog/mybank/config/CorsConfig.class
